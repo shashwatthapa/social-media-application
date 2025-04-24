@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="row w-100 shadow rounded overflow-hidden" style="max-width: 900px; min-height: 500px;">
+
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center text-white bg-primary p-4">
+            <h1 class="display-5 fw-bold">Welcome to ChatterNet 🎉</h1>
+            <p class="lead text-light mt-3 text-center">
+                Connect, share, and discover what's happening in your world.  
+                Join the community now!
+            </p>
+            <img src="https://img.icons8.com/clouds/100/000000/chat.png" class="mt-4" alt="Chat icon" />
+        </div>
+
+        <div class="col-md-6 bg-white p-5">
+            <form method="POST" enctype="multipart/form-data">
+                <h2 class="text-center mb-4 text-dark">Login to your account</h2>
+
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.username }}
+                </div>
+                <div class="mb-3">
+                    {{ form.password }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+                
+                <hr class="my-4">
+                
+                <div class="text-center">
+                    <p class="mb-2">Don't have an account?</p>
+                    <a href="{% url 'register' %}" class="btn btn-outline-success">Create New Account</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
