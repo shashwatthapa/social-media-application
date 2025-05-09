@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">ChatterNet</a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'dashboard' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'post' %}">Create Post</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'own_post' %}">My Posts</a>
+        </li>
+      </ul>
+      <div class="d-flex">
+        <a class="btn btn-outline-warning fw-semibold" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="posts-feed">
+        {% for post in mem %}
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header bg-light">
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h6 class="mb-0">{{ post.user.username }}</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content }}</p>
+          </div>
+          <div class="card-footer bg-white">
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-sm btn-outline-primary">Like</button>
+              <button class="btn btn-sm btn-outline-secondary">Comment</button>
+              <button class="btn btn-sm btn-outline-danger">Share</button>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-5">
+          <h4 class="text-muted">No posts yet</h4>
+          <p>Be the first to create a post!</p>
+          <a href="{% url 'post' %}" class="btn btn-primary">Create Post</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+{% endblock %}

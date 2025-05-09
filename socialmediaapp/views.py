@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .forms import RegisterForm,ProfilepicForm,LoginForm
+from .forms import RegisterForm,ProfilepicForm,LoginForm,PostForm
 from django.contrib.auth import login,logout,authenticate
+from .models import Post
 # Create your views here.
 def register(request):
     if request.method == 'POST':
@@ -34,4 +35,27 @@ def user_login(request):
     return render(request,'login.html',{'form':form})
 
 def home(request):
-    return HttpResponse('Welcom to home page')
+    mem = Post.objects.all().order_by('-id')
+    return render(request,'home.html',{'mem':mem})
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
+def post(request):
+    if request.method =='POST':
+        form = PostForm(request.POST,request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user=request.user
+            post.save()
+            return redirect('dashboard')
+    else:
+        form = PostForm()
+        return render(request,'post.html',{'form':form})
+
+def own_post(request):
+    mem = Post.objects.filter(user=request.user)
+    return render(request,'own_post.html',{'mem':mem})
+
+    

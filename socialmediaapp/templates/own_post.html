@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="container">
+    <h1 class="my-4">My Posts</h1>
+    
+    {% for mem in mem %}
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-light">
+            <div class="d-flex align-items-center">
+               
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-0">{{ mem.user.username }}</h6>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <h5 class="card-title">{{ mem.title }}</h5>
+            <p class="card-text">{{ mem.content }}</p>
+        </div>
+        
+        <div class="card-footer bg-white">
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">Like</button>
+                <button class="btn btn-sm btn-outline-secondary">Comment</button>
+                <button class="btn btn-sm btn-outline-danger">Share</button>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">
+        You haven't created any posts yet.
+        <a href="{% url 'post' %}" class="alert-link">Create your first post</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
